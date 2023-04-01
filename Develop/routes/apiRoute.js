@@ -11,6 +11,18 @@ module.exports = function(app){
         res.json(JSON.parse(data));
     });
 
+    //POST API
+    app.post("/api/notes", (req,res) => {
+        //saving notes
+        const nwNote = {
+            ...req.body,
+            id:uId(),
+        };
+
+        console.log('New notes request');
+
+        //
+    })
     });
 
 
