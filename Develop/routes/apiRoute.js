@@ -21,8 +21,28 @@ module.exports = function(app){
 
         console.log('New notes request');
 
-        //
-    })
+        // To read the JSON
+        let data = fs.readFileSync('Develop\db\db.json','utf8');
+
+        const dataJSON = JSON.parse(data);
+        dataJSON.push(nwNote);
+
+        fs.watchFile(
+            'Develop\db\db.json', JSON.stringify(dataJSON),
+            (err, text) => {
+                if(err){
+                    console.error(err);
+                    return;
+                }
+                console.log("Hi", text);
+            }
+        );
+        console.log("Success, a new note added");
+
+        res.json(data);
+    });
+
+    
     });
 
 
