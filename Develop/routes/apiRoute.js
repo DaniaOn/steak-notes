@@ -42,11 +42,21 @@ module.exports = function(app){
         res.json(data);
     });
 
-    
+    //DELETE requeste API
+    app.delete("/api/notes/:id", (req,res) => {
+        let data = fs.readFileSync('Develop\db\db.json','utf8'); //read the file
+        const dataJSON = JSON.parse(data);
+
+        const nwNote = dataJSON.filter((note) =>{
+            return note.id !== req.params.id; 
+        });
+        //console (req.params)
+        fs.watchFile('Develop\db\db.json', JSON.stringify(nwNote), (err, text) => {
+            if (err){
+                console.error(err);
+                return;
+            }
+        });
+        res.json (nwNote);
     });
-
-
-
-
-
-}
+    };
