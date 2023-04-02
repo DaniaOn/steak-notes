@@ -6,7 +6,7 @@ module.exports = function(app){
     app.get("/api/notes",function(req, res){
         console.log ('Note request: GET');
         // To read the json
-        let data = fs.readFileSync('Develop\db\db.json','utf8');
+        let data = fs.readFileSync('./Develop/db/db.json','utf8');
         //Sending response
         res.json(JSON.parse(data));
     });
@@ -22,13 +22,13 @@ module.exports = function(app){
         console.log('New notes request');
 
         // To read the JSON
-        let data = fs.readFileSync('Develop\db\db.json','utf8');
+        let data = fs.readFileSync('./Develop/db/db.json','utf8');
 
         const dataJSON = JSON.parse(data);
         dataJSON.push(nwNote);
 
         fs.watchFile(
-            'Develop\db\db.json', JSON.stringify(dataJSON),
+            './Develop/db/db.json', JSON.stringify(dataJSON),
             (err, text) => {
                 if(err){
                     console.error(err);
@@ -44,14 +44,14 @@ module.exports = function(app){
 
     //DELETE requeste API
     app.delete("/api/notes/:id", (req,res) => {
-        let data = fs.readFileSync('Develop\db\db.json','utf8'); //read the file
+        let data = fs.readFileSync('/Develop/db/db.json','utf8'); //read the file
         const dataJSON = JSON.parse(data);
 
-        const nwNote = dataJSON.filter((note) =>{
-            return note.id !== req.params.id; 
+        const nwNote = dataJSON.filter((notes) =>{
+            return notes.id !== req.params.id; 
         });
         //console (req.params)
-        fs.watchFile('Develop\db\db.json', JSON.stringify(nwNote), (err, text) => {
+        fs.watchFile('/Develop/db/db.json', JSON.stringify(nwNote), (err, text) => {
             if (err){
                 console.error(err);
                 return;
